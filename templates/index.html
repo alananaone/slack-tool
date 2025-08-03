@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slack 頻道與成員管理</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Slack 頻道與成員管理</h1>
+        <div id="loading">正在從 Slack 讀取資料...</div>
+        
+        <div id="controls" class="hidden">
+            <h2>建立新頻道</h2>
+            <form id="create-channel-form">
+                <input type="text" id="new-channel-name" placeholder="新頻道名稱 (英文小寫)" required>
+                <label>
+                    <input type="checkbox" id="is-private"> 私人頻道
+                </label>
+                <button type="submit">建立頻道</button>
+            </form>
+            <hr>
+        </div>
+
+        <div id="manager" class="hidden">
+            <div class="view-selector">
+                <label>檢視模式：</label>
+                <button id="view-by-channel" class="active">按頻道管理</button>
+                <button id="view-by-user">按人員管理</button>
+            </div>
+            
+            <div id="channel-view" class="view-container">
+                <div class="selector-panel">
+                    <h3>頻道列表</h3>
+                    <ul id="channel-list"></ul>
+                </div>
+                <div class="editor-panel">
+                    <div class="editor-header">
+                        <h3 id="editor-channel-name">請選擇一個頻道</h3>
+                        <button id="archive-channel-button" class="danger-button hidden">封存此頻道</button>
+                    </div>
+                    <p id="editor-channel-info"></p>
+                    
+                    <div id="user-select-all-container" class="select-all-container hidden">
+                        <label>
+                            <input type="checkbox" id="select-all-users"> <strong>全選 / 取消全選</strong>
+                        </label>
+                    </div>
+
+                    <div id="user-selection-area">
+                        </div>
+                    <button id="sync-channel-button" class="hidden">同步成員至 Slack</button>
+                </div>
+            </div>
+
+            <div id="user-view" class="view-container hidden">
+                 <div class="selector-panel">
+                    <h3>人員列表</h3>
+                    <ul id="user-list"></ul>
+                </div>
+                <div class="editor-panel">
+                    <h3 id="editor-user-name">請選擇一位人員</h3>
+                    
+                    <div id="channel-select-all-container" class="select-all-container hidden">
+                        <label>
+                            <input type="checkbox" id="select-all-channels"> <strong>全選 / 取消全選</strong>
+                        </label>
+                    </div>
+
+                     <div id="channel-selection-area">
+                        </div>
+                    <button id="sync-user-button" class="hidden">同步頻道至 Slack</button>
+                </div>
+            </div>
+        </div>
+        <div id="status-message"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
