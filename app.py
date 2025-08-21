@@ -1,4 +1,6 @@
 import os
+import webbrowser
+from threading import Timer
 from flask import Flask, render_template, request, jsonify
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -182,5 +184,19 @@ def archive_channel():
         
         return jsonify({'ok': False, 'error': e.response['error']}), 500
 
+# --- 主程式執行區塊 (已修改) ---
+
+def open_browser():
+    """
+    在預設瀏覽器中開啟應用程式頁面
+    """
+    webbrowser.open_new('http://127.0.0.1:5000')
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    # 建立一個計時器，在 1 秒後執行 open_browser 函式
+    # 這能確保 Flask 伺服器有足夠的時間啟動
+    Timer(1, open_browser).start()
+    
+    # 執行 Flask 應用程式
+    # 建議在最終打包的 exe 中將 debug 設為 False
+    app.run(debug=False, port=5000)
